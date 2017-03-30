@@ -130,7 +130,7 @@ length [(x,y) | x <- mySqr, y <- myCube, x < 50, y < 50 ] --15
 
 3. ⊥
 
-4. Return a [Bool] with True for each vowel otherwise False\
+4. Return a [Bool] with True for each vowel otherwise False
 
  --                   [a]                       [b]           [c]
 5. [[1, 4, 9, 16, 25, 36, 49, 64, 81, 100], [1, 10, 20], [15, 15, 15]]
