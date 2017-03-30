@@ -154,11 +154,9 @@ squishMap = flip foldr [] . ((++) .)
 squishAgain :: [[a]] -> [a]
 squishAgain = squishMap (\(x:xs) -> x:xs)
 
---these work for f := compare, but not (\_ _ -> GT || LT)
---Stuck on why, going to revisit
 myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
-myMaximumBy f xs = foldr (\a b -> bool a b (f a b == GT)) (head xs) xs
+myMaximumBy f xs = foldl (\a b -> bool a b (f a b == GT)) (head xs) xs
 
 myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
-myMinimumBy f xs = foldr (\a b -> bool a b (f a b == LT)) (head xs) xs
+myMinimumBy f xs = foldl (\a b -> bool a b (f a b == LT)) (head xs) xs
 ```
