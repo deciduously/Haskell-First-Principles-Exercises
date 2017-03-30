@@ -6,4 +6,4 @@ This book is Early Access, the problems referenced are not given in this repo an
 
 Answers are not given in the book.  I give no guarantee these answers are correct or the best way, they are just what I ended up with and verified solely via GHC.
 
-Completed though **2/10-Folding Lists**
+Completed though **3/11-Algebraic Dataypes**
