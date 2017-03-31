@@ -161,7 +161,7 @@ capitalizeWord s@(c:cs) = toUpper c : cs
 2.
 capitalizeParagraph :: String -> String
 capitalizeParagraph []     = []
-capitalizeParagraph p = init.concat.intersperse ". " $ map capSentence (sentences p)
+capitalizeParagraph p = init.intercalate ". " $ map capSentence (sentences p)
   where
     sentences s = map dropInitialSpaces (myChunks s '.')          -- myChunks lives in the Ch 9 exercises
       where dropInitialSpaces s                                   -- Data.List.Split.SplitOn works too but
@@ -172,3 +172,85 @@ capitalizeParagraph p = init.concat.intersperse ". " $ map capSentence (sentence
     capSentence s  = capitalizeWord (takeWhile (/= ' ') s) ++ drop (length (takeWhile (/= ' ') s)) s
 ```
 #### Phone Exercise
+```haskell
+import Data.Char
+import Data.List
+
+type Phone = [Key]
+type Digit = Char
+type Presses = Int
+data Key = Key Digit String deriving (Eq, Show)
+
+phone :: Phone
+phone = [ Key '1' "1"
+        , Key '2' "ABC2"
+        , Key '3' "DEF3"
+        , Key '4' "GHI4"
+        , Key '5' "JKL5"
+        , Key '6' "MNO6"
+        , Key '7' "PQRS7"
+        , Key '8' "TUV8"
+        , Key '9' "WXYZ9"
+        , Key '0' " 0"
+        , Key '*' "^"
+        , Key '#' "./#"
+        ]
+
+freqFold ::  [a] -> (a, Int) -> (a, Int)
+freqFold a b = if length a > snd b
+               then (head a, length a)
+               else b
+
+1.
+getDigit :: Key -> Digit
+getDigit (Key d _) = d
+
+getPresses :: Char -> Key -> Presses
+getPresses c (Key _ l) = case elemIndex (toUpper c) l of
+                          Just n -> n + 1
+                          Nothing -> 0
+
+reverseTaps :: Phone -> Char -> [(Digit, Presses)]
+reverseTaps p c = if isUpper c
+                   then [(getDigit getKey, getPresses c getKey)]
+                   else [('*', 1), (getDigit getKey, getPresses c getKey)]
+  where
+    getKey = head $ filter (\(Key _ l) -> elem (toUpper c) l) p -- TODO head is a ⊥ waiting to happen
+
+fullString :: Phone -> String -> [(Digit, Presses)]
+fullString p s = concatMap (reverseTaps p) s
+
+3.
+fingerTaps :: [(Digit, Presses)] -> Presses
+fingerTaps = foldr ((+).snd) 0
+
+4.
+mostPopularLetter :: String -> Char
+mostPopularLetter s = fst $ foldr freqFold (' ', 0 :: Int) (group s)
+
+mostPopularWord :: String -> String
+mostPopularWord s = fst $ foldr freqFold ("", 0 :: Int) (group $ words s)
+
+5.
+coolestLetter :: [String] -> Char
+coolestLetter = mostPopularLetter . intercalate " "
+
+coolestWord :: [String] -> String
+coolestWord = mostPopularWord . intercalate " "
+```
+#### Huttons Razor
+```haskell
+data Expr
+  = Lit Integer
+  | Add Expr Expr
+
+1.
+eval :: Expr -> Integer
+eval (Lit n)    = n
+eval (Add a b) = eval a + eval b
+
+2.
+printExpr :: Expr -> String
+printExpr (Lit n)   = show n
+printExpr (Add a b) = printExpr a ++ " + " ++ printExpr b
+```
