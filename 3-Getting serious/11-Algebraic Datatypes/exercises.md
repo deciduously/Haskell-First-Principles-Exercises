@@ -163,9 +163,9 @@ capitalizeParagraph :: String -> String
 capitalizeParagraph []     = []
 capitalizeParagraph p = reverse.tail.reverse.concat.intersperse ". " $ map capSentence (sentences p)
   where
-    sentences s = map dropInitialSpaces (myChunks s '.') -- myChunks lives in the Ch 9 exercise solutions
-      where dropInitialSpaces s
-                            | s == []       = []
+    sentences s = map dropInitialSpaces (myChunks s '.')          -- myChunks lives in the Ch 9 exercises
+      where dropInitialSpaces s                                   -- Data.List.Split.SplitOn works too but
+                            | s == []       = []                  -- I wanted to use my own implementation
                             | otherwise     = dropWhile (== ' ') s
 
     capSentence [] = []
