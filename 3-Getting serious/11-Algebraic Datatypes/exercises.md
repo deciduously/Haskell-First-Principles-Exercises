@@ -1,15 +1,13 @@
 #### Dog Types
-```haskell
 1. type constructor
-2. * -> *
-3. Doggies String :: *
-4. Num a => Doggies a
-5. Doggies Integer
-6. Doggies String
+2. `* -> *`
+3. `Doggies String :: *`
+4. `Num a => Doggies a`
+5. `Doggies Integer`
+6. `Doggies String`
 7. exists as both
-8. a -> DoDeBoa
-9. DoDeBo String
-```
+8. `a -> DoDeBoa`
+9. `DoDeBo String`
 #### Vehicles
 ```haskell
 1. Vehicle
@@ -49,7 +47,7 @@ isPlane _         = False
 4. `Int` is finite (but large), `Integer` is infinite
 5. (^2) - 8 bits with two possible values each
 #### For Example
-1. `MakeExample:: Example` - canot query :t for Example, but use :k to get kind
+1. `MakeExample:: Example` - cannot query :t for Example, but use :k to get kind
 2. Shows invocation, typeclass instances
 3. `MakeExample :: Integer -> Example`
 #### Logic Goats
