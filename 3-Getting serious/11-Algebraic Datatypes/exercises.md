@@ -161,7 +161,7 @@ capitalizeWord s@(c:cs) = toUpper c : cs
 2.
 capitalizeParagraph :: String -> String
 capitalizeParagraph []     = []
-capitalizeParagraph p = reverse.tail.reverse.concat.intersperse ". " $ map capSentence (sentences p)
+capitalizeParagraph p = init.concat.intersperse ". " $ map capSentence (sentences p)
   where
     sentences s = map dropInitialSpaces (myChunks s '.')          -- myChunks lives in the Ch 9 exercises
       where dropInitialSpaces s                                   -- Data.List.Split.SplitOn works too but

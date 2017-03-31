@@ -27,7 +27,7 @@ capitalizeWord s@(c:cs) = toUpper c : cs
 
 capitalizeParagraph :: String -> String
 capitalizeParagraph []     = []
-capitalizeParagraph p = reverse.tail.reverse.concat.intersperse ". " $ map capSentence (sentences p)
+capitalizeParagraph p = init.concat.intersperse ". " $ map capSentence (sentences p)
   where
     sentences s = map dropInitialSpaces (myChunks s '.')
       where dropInitialSpaces s
