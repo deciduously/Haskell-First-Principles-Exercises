@@ -43,7 +43,7 @@ myMaximumBy f (x:xs) = Just $ foldl (\a b -> keepG a b (f a b)) x xs
   where
       keepG x y o
           | o == GT   = x
-          | otherwise =  y
+          | otherwise = y
 
 myMinimumBy :: (a -> a -> Ordering) -> [a] -> Maybe a
 myMinimumBy _ []     = Nothing

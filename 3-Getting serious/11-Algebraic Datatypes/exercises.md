@@ -117,3 +117,58 @@ foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
 foldTree f z bt = foldr f z (inorder bt)
 ```
 ### Chapter Exercises
+#### Multiple Choice
+1. a
+2. c
+3. b
+4. c
+#### Ciphers
+```haskell
+letterToInt :: Char -> Int
+letterToInt c = fromIntegral $ ord c - ord 'a'
+
+intToLetter :: Int -> Char
+intToLetter n = chr $ ord 'a' + n
+
+shiftN :: Char -> Int -> Char
+shiftN c n
+     | not $ isAlpha c = c
+
+--TODO this doesn't preserve spaces
+vigenere :: String -> String -> String
+vigenere p k = zipWith shiftN (concat $ words p) keyVals
+    where keyVals = [ letterToInt x | x <- take (length p) $ cycle k ]
+```
+#### As-patterns
+```haskell
+1.
+--TODO whoops, didn't use the as-pattern - it's concise at least
+isSubSequenceOf :: (Eq a) => [a] -> [a] -> Bool
+isSubSequenceOf x y = foldr ((&&).(flip elem) y) True x
+
+2.
+import Data.Char
+
+capitalizeWords :: String -> [(String, String)]
+capitalizeWords s = map (\s@(c:cs) -> (s, toUpper c : cs)) (words s)
+```
+#### Language exercises
+```haskell
+1.
+capitalizeWord :: String -> String
+capitalizeWord s@(c:cs) = toUpper c : cs
+
+2.
+capitalizeParagraph :: String -> String
+capitalizeParagraph []     = []
+capitalizeParagraph p = reverse.tail.reverse.concat.intersperse ". " $ map capSentence (sentences p)
+  where
+    sentences s = map dropInitialSpaces (myChunks s '.') -- myChunks lives in the Ch 9 exercise solutions
+      where dropInitialSpaces s
+                            | s == []       = []
+                            | otherwise     = dropWhile (== ' ') s
+
+    capSentence [] = []
+    capSentence s  = capitalizeWord (takeWhile (/= ' ') s) ++ drop (length (takeWhile (/= ' ') s)) s
+```
+#### Phone Exercise

@@ -118,11 +118,7 @@ allCombosWords = allCombos
 ```
 #### Rewriting standard functions using folds
 ```haskell
---to avoid importing Data.Bool
-bool :: a -> a -> Bool -> a
-bool x y b
-   | b         = x
-   | otherwise = y
+--Data.List not used here, in practice import and use foldl'
 
 myOr :: [Bool] -> Bool
 myOr = foldr (||) False
@@ -144,6 +140,10 @@ myMap = flip foldr [] . ((:) .)
 
 myFilter :: (a -> Bool) -> [a] -> [a]
 myFilter f = foldr (\a -> (++) (bool [a] [] (f a))) []
+  where
+    bool x y b
+       | b         = x
+       | otherwise = y
 
 squish :: [[a]] -> [a]
 squish = foldr (++) []
@@ -156,9 +156,17 @@ squishAgain = squishMap (\(x:xs) -> x:xs)
 
 myMaximumBy :: (a -> a -> Ordering) -> [a] -> Maybe a
 myMaximumBy _ []     = Nothing
-myMaximumBy f (x:xs) = Just $ foldl (\a b -> bool a b (f a b == GT)) x xs
+myMaximumBy f (x:xs) = Just $ foldl (\a b -> keepG a b (f a b)) x xs
+  where
+      keepG x y o
+          | o == GT   = x
+          | otherwise =  y
 
 myMinimumBy :: (a -> a -> Ordering) -> [a] -> Maybe a
 myMinimumBy _ []     = Nothing
-myMinimumBy f (x:xs) = Just $ foldl (\a b -> bool a b (f a b == LT)) x xs
+myMinimumBy f (x:xs) = Just $ foldl (\a b -> keepL a b (f a b)) x xs
+  where
+      keepL x y o
+          | o == LT   = x
+          | otherwise = y
 ```
