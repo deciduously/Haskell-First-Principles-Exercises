@@ -231,10 +231,10 @@ mostPopularWord s = fst $ foldr freqFold ("", 0 :: Int) (group $ words s)
 
 5.
 coolestLetter :: [String] -> Char
-coolestLetter = mostPopularLetter . intercalate " "
+coolestLetter = mostPopularLetter . unwords
 
 coolestWord :: [String] -> String
-coolestWord = mostPopularWord . intercalate " "
+coolestWord = mostPopularWord . unwords
 ```
 #### Huttons Razor
 ```haskell
