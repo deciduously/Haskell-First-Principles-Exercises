@@ -68,3 +68,17 @@ main = do
 
 foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
 foldTree f z bt = foldr f z (inorder bt)
+
+unfold :: (a -> Maybe (a,b,a)) -> a -> BinaryTree b
+unfold f z = go f (f z)
+  where
+    go f Nothing        = Leaf
+    go f (Just (x,y,z)) = Node (go f (f x)) y (go f (f z))
+
+--TODO this builds the tree in the reverse of what is specified
+--I'll come back to this.
+treeBuild :: Integer -> BinaryTree Integer
+treeBuild = unfold treeFrom
+  where
+    treeFrom 0 = Nothing
+    treeFrom n = Just (n-1,n,n-1)
