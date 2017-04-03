@@ -3,7 +3,7 @@
 1. `forever` and `when`
 2. `Data.Bits` and `Database.Blacktip.Types`
 3. Types defined for the package
-4. ` Control.Concurrent.Mvar`, `Filesystem.Path.CUrrentOS`, and `Control.Concurrent`
+4. ` Control.Concurrent.Mvar`, `Filesystem.Path.CurrentOS`, and `Control.Concurrent`
 5. `Filesystem.writeFile`
 6. `Control.Monad`
 ### Chapter Exercises
@@ -148,10 +148,10 @@ getStringInt = forever $ do
     p <- getLine
     putStr "Rotate: "
     n <- getLine
-    let n' = intFromString n in
-        case n' of
-            Nothing -> return ("", 0)
-            Just x  -> return (p, x)
+    let n' = intFromString n
+    case n' of
+        Nothing -> return ("", 0)
+        Just x  -> return (p, x)
 
 getStringString :: IO (String, String)
 getStringString = do

@@ -49,10 +49,10 @@ getStringInt = forever $ do
     p <- getLine
     putStr "Rotate: "
     n <- getLine
-    let n' = intFromString n in
-        case n' of
-            Nothing -> return ("", 0)
-            Just x  -> return (p, x)
+    let n' = intFromString n
+    case n' of
+        Nothing -> return ("", 0)
+        Just x  -> return (p, x)
 
 getStringString :: IO (String, String)
 getStringString = do
