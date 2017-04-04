@@ -8,7 +8,7 @@
 6. `Control.Monad`
 ### Chapter Exercises
 #### Complete Hangman
-(Full code)[https://github.com/deciduously/Haskell-First-Principles-Exercises/tree/master/4-Getting%20real/13-Building%20Projects/code/hangman]
+[Full code](https://github.com/deciduously/Haskell-First-Principles-Exercises/tree/master/4-Getting%20real/13-Building%20Projects/code/hangman)
 #### Adding User Input to Ciphers
 ```haskell
 intFromString :: String -> Maybe Int
