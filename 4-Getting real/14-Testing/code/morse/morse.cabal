@@ -8,7 +8,7 @@ license-file:        LICENSE
 author:              Ben Lovy
 maintainer:          bendlovy@gmail.com
 copyright:           2017, Ben Lovy
-category:            Web
+category:            Text
 build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
@@ -16,7 +16,7 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Morse
-  ghc-options:         -Wall, fwarn-tabs
+  ghc-options:         -Wall -fwarn-tabs
   build-depends:       base >= 4.7 && < 5
                      , containers
                      , QuickCheck
