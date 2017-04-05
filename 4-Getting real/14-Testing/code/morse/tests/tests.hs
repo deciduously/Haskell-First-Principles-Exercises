@@ -4,7 +4,7 @@ import qualified Data.Map as M
 import Morse
 import Test.QuickCheck
 
-allowedChars :: [Char]
+allowedChars :: String
 allowedChars = M.keys letterToMorse
 
 allowedMorse :: [Morse]
@@ -19,8 +19,8 @@ morseGen = elements allowedMorse
 prop_thereAndBackAgain :: Property
 prop_thereAndBackAgain =
   forAll charGen
-    (\c -> ((charToMorse c)
-      >>= morseToChar) == Just c)
+        (\c -> (charToMorse c >>= morseToChar) == Just c
+        )
 
 main :: IO ()
 main = quickCheck prop_thereAndBackAgain
