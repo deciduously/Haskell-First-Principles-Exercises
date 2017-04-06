@@ -1,8 +1,8 @@
 module Main where
 
-import qualified Data.Map as M
-import Morse
-import Test.QuickCheck
+import qualified Data.Map        as M
+import           Morse
+import           Test.QuickCheck
 
 allowedChars :: String
 allowedChars = M.keys letterToMorse
@@ -19,8 +19,7 @@ morseGen = elements allowedMorse
 prop_thereAndBackAgain :: Property
 prop_thereAndBackAgain =
   forAll charGen
-        (\c -> (charToMorse c >>= morseToChar) == Just c
-        )
+        (\c -> (charToMorse c >>= morseToChar) == Just c)
 
 main :: IO ()
 main = quickCheck prop_thereAndBackAgain

@@ -2,7 +2,7 @@
 module Main where
 
 import Control.Monad (forever, when)
-import Data.List (intercalate)
+import Data.List (unwords)
 import Data.Traversable (traverse)
 import Morse (stringToMorse, morseToChar)
 import System.Environment (getArgs)
@@ -22,7 +22,7 @@ convertToMorse = forever $ do
         case morse of
           (Just str) ->
             putStrLn
-            (intercalate " " str)
+            (unwords " " str)
           Nothing -> do
             putStrLn $ "ERROR: " ++ line
             exitFailure
@@ -37,7 +37,7 @@ convertFromMorse = forever $ do
     where
       convertLine line = do
         let decoded :: Maybe String
-            decoded = 
+            decoded =
               traverse morseToChar
                       (words line)
         case decoded of
