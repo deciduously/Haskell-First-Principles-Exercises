@@ -1,4 +1,5 @@
 --numbersWords.hs
+
 module NumbersWords where
 
 import Data.List (intersperse)
@@ -19,7 +20,7 @@ digitToWord n
 
 digits :: Int -> [Int]
 digits n
-     | n < 0 = (-1 :: Int) : digits $ abs n -- this is hacky but at least it doesn't crash 
+  | n < 0 = (-1 :: Int) : (digits $ abs n) -- this is hacky but at least it doesn't crash 
      | n < 10 = [n]
      | otherwise = snd x : digits (fst x) where x = divMod n 10
 

@@ -1,39 +1,26 @@
-### Intermission
-#### Short Exercise
-```haskell
-    it "x * 0 is always 0" $ do
-      property $ \x -> multR (x :: Int) 0 == 0
-    it "x * 1 is always x" $ do
-      property $ \x -> multR (x :: Int) 1 == x
-```
-#### Morse
-[Full Code](https://github.com/deciduously/Haskell-First-Principles-Exercises/tree/master/4-Getting%20real/14-Testing/code/morse)
-### Chapter Exercises
-#### Using Hspec
-```haskell
-main :: IO ()
-main = hspec $ do
-  describe "digitToWord" $ do
-    it "returns zero for 0" $ do
-      digitToWord 0 `shouldBe` "zero"
-    it "returns one for 1" $ do
-      digitToWord 1 `shouldBe` "one"
+--quickc.hs
+module QuickC where
 
-  describe "digits" $ do
-    it "returns [1] for 1" $ do
-      digits 1 `shouldBe` [1]
-    it "returns [1, 0, 0] for 100" $ do
-      digits 100 `shouldBe` [1, 0, 0]
+import           Data.List       (sort)
+import           GHC.Generics
+import           Test.QuickCheck
 
-  describe "wordNumber" $ do
-    it "one-zero-zero given  100" $ do
-      wordNumber 100 `shouldBe` "one-zero-zero"
-    it "nine-zero-zero-one for 9001" $ do
-      wordNumber 9001 `shouldBe` "nine-zero-zero-one"
-```
-#### Using Quickcheck
+half :: Fractional a => a -> a
+half x = x / 2
 
-```haskell
+halfIdentity :: Fractional a => a -> a
+halfIdentity = (*2) . half
+
+trueGen :: Gen Int
+trueGen = coarbitrary True arbitrary
+
+listOrdered :: (Ord a) => [a] -> Bool
+listOrdered xs =
+  snd $ foldr go (Nothing, True) xs
+    where go _ status@(_, False) = status
+          go y (Nothing, t)      = (Just y, t)
+          go y (Just x, _)       = (Just y, x >= y)
+
 prop_halfIdentify :: Property
 prop_halfIdentify =
   forAll arbitrary (\x -> (x::Double) == halfIdentity x)
@@ -78,26 +65,26 @@ prop_reverseRoundTrip :: [Integer] ->  Bool
 prop_reverseRoundTrip xs =
   reverse (reverse xs) == xs
 
---TODO having trouble with Coarbitrary - come back to this
-```
-#### Failure
-Floating point imprecision in sqrt
-#### Idempotence
-```haskell
+--TODO having trouble with Arbitrary - come back to this
+--prop_dollarSign :: Property
+--prop_dollarSign =
+--  forall (coarbitrary arbitrary) (\f -> f $ arbitrary == f arbitrary)
+
+square :: Num a => a -> a
+square x = x * x
+
+prop_squareIdentity :: Double -> Bool
+prop_squareIdentity x =
+  square (sqrt x) == x
+
+twice f = f . f
+fourTimes = twice . twice
+
+
 prop_idempotentSort :: [Int] -> Bool
 prop_idempotentSort s =
   sort s == fourTimes sort s
-```
-#### Make a Gen for the type
-```haskell
-genFool :: Gen Fool
-genFool =
-  choose (Fulse, Frue)
 
-genSkew :: Gen Fool
-genSkew = 
-  frequency [ (2, return Frue)
-            , (1, return Fulse)]
-```
-#### Hangman Tests
-
+main :: IO ()
+main = do
+  quickCheck prop_idempotentSort
