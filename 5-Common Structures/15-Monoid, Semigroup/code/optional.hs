@@ -1,8 +1,6 @@
 --optional.hs
 module Optional where
 
-import Data.Monoid
-
 data Optional a =
     Nada
   | Only a
