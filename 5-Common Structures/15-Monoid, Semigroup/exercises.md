@@ -8,11 +8,8 @@ instance Monoid a => Monoid (Optional a) where
 ```
 #### Madlibs
 ```haskell
-madlibbinBetter' :: Exclamation
-           -> Adverb
-           -> Noun
-           -> Adjective
-           -> String
+madlibbinBetter' :: Exclamation -> Adverb -> Noun -> Adjective -> String
+madlibbinBetter' e adv noun adj = mconcat [e, "! he said ", adv, " as he jumped into his car ", noun, " and drove off with his ", adj, " wife"]
 ```
 #### Maybe Another Monoid
 ```haskell
