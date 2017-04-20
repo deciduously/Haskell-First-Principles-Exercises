@@ -1,10 +1,9 @@
 --another.hs
 module Another where
 
-import Control.Monad
-import Data.Monoid
-import Data.Optional
-import Test.QuickCheck
+import           Data.Monoid
+import           Data.Optional
+import           Test.QuickCheck
 
 newtype First' a =
   First' { getFirst' :: Optional a}
@@ -19,10 +18,10 @@ instance Arbitrary a => Arbitrary (First' a) where
 instance Monoid (First' a) where
   mempty = First' Default
   mappend (First' Default) (First' x) = First' x
-  mappend (First' x) (First' _) = First' x
+  mappend (First' x) (First' _)       = First' x
 
 monoidAssoc :: (Eq m, Monoid m) => m -> m -> m -> Bool
-monoidAssoc  a b c = a <> (b <> c) == (a <> b) <> c
+monoidAssoc a b c = a <> (b <> c) == (a <> b) <> c
 
 monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool
 monoidLeftIdentity a = (mempty <> a) == a

@@ -17,7 +17,8 @@ instance Arbitrary a => Arbitrary (First' a) where
   arbitrary = do
     a <- arbitrary
     frequency [ (1, return $ First' Default)
-              , (2, return $ First' $ Specific a)]
+              , (2, return $ First' $ Specific a)
+              ]
 
 instance Monoid (First' a) where
   mempty = First' Default
