@@ -1,8 +1,8 @@
 --semigroups.hs
 module Semigroups where
 
-import Data.Semigroup
-import Test.QuickCheck
+import           Data.Semigroup
+import           Test.QuickCheck
 
 semigroupAssoc :: (Eq m, Semigroup m) => m -> m -> m -> Bool
 semigroupAssoc a b c = a <> (b <> c) == (a <> b) <> c
